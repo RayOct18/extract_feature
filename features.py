@@ -63,9 +63,11 @@ def predict(validate_loader, model, device, args):
         for i, (x, y, name) in enumerate(validate_loader):
             x = x.to(device)
             y = y.to(device)
-            # compute output
+
+            # denorm
             x = (x + 1) / 2
             x = x.clamp_(0, 1)# *255
+
             outputs = model(x)
             names.append(list(name))
             feas.append(outputs.cpu().numpy())
